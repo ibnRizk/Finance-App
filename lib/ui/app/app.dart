@@ -23,16 +23,14 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   int selected = 0;
 
-  final List<String> nameList = [
-    'Income',
-    'Expenses',
-    'Assets',
-    'Liabilities'
-  ];
+  final List<String> nameList = ['Income', 'Expenses', 'Assets', 'Liabilities'];
 
   final List<List<Widget>?> buttonList = [
     [const IncomeActionButton()], // Income page buttons
-    [const ExpensesActionButtonAdd(), const ExpensesActionButtonOptions()], // Expenses page buttons
+    [
+      const ExpensesActionButtonAdd(),
+      const ExpensesActionButtonOptions()
+    ], // Expenses page buttons
     [const AssetActionButton()], // Assets page buttons
     [const LiabilitiesActionButton()] // Liabilities page buttons
   ];
@@ -50,33 +48,24 @@ class _AppState extends State<App> {
         ],
       ),
       appBar: AppBar(
-        title: Text(
-            nameList[selected],
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 30
-            )
-        ),
+        title: Text(nameList[selected],
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
         backgroundColor: darkTheme.surfaceContainer,
         actions: [
-          if (buttonList[selected] != null)
-            ...buttonList[selected]!,
+          if (buttonList[selected] != null) ...buttonList[selected]!,
           PopupMenuButton(
             onSelected: (value) async {
               if (value == "settings") {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const SettingsPage())
-                );
+                    MaterialPageRoute(
+                        builder: (context) => const SettingsPage()));
               }
               if (value == "logout") {
                 await FirebaseAuth.instance.signOut();
-              }
-              else if (value == "info") {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const InfoPage())
-                );
+              } else if (value == "info") {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const InfoPage()));
               }
             },
             color: darkTheme.surfaceBright,
